@@ -4,8 +4,8 @@ Here you can see how I did to get the housenumbers from the municipality of Tren
 
 #### Here are all the steps I made
 
-1. I got the dataset with the [address numbers](http://www.comune.trento.it/Aree-tematiche/Cartografia/Download/Numeri-civici-Open-Data) of Trento from the [Open Data section of the Municipality website](http://www.comune.trento.it/Aree-tematiche/Cartografia/Download). The dataset [is distributed with the terms of the CC0](http://www.comune.trento.it/Classificazioni/Tipi-di-licenze/CC-Zero).
-1. I got the dataset with the address numbers of Trento from [OpenStreetMap](https://www.openstreetmap.org/) from the website [Estratti OpenStreetMap](http://estratti.openstreetmap.it). The file used is the shapefile *addresses.shp* archived on the zipfile [022205---Trento.zip](http://osm-estratti.wmflabs.org/estratti/comuni/shape/022205---Trento.zip)
+1. I got the dataset with the [house numbers](http://www.comune.trento.it/Aree-tematiche/Cartografia/Download/Numeri-civici-Open-Data) of Trento from the [Open Data section of the Municipality website](http://www.comune.trento.it/Aree-tematiche/Cartografia/Download). The dataset [is distributed with the terms of the CC0](http://www.comune.trento.it/Classificazioni/Tipi-di-licenze/CC-Zero).
+1. I got the dataset with the house numbers of Trento from [OpenStreetMap](https://www.openstreetmap.org/) from the website [Estratti OpenStreetMap](http://estratti.openstreetmap.it). The file used is the shapefile *addresses.shp* archived on the zipfile [022205---Trento.zip](http://osm-estratti.wmflabs.org/estratti/comuni/shape/022205---Trento.zip)
 1. I created a SQLite/Spatialite database and inserted the datasets creating 2 tables with [Spatialite-gui](https://www.gaia-gis.it/fossil/spatialite_gui/index). The projection used by the Municipality is the *ETRS89 / UTM zone 32N* [EPSG:3044](https://epsg.io/3044).
 1. I created a third table, based on the Municipality one, containing only "front entrance" (value "ingresso principale") numbers and discarding side entrances.
 1. I started to write some code in Python to do some exercises without Spatialite-gui
