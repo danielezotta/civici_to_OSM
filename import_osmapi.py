@@ -62,18 +62,49 @@ def main():
         
         # Checking if the housenumber is on a gate
         if (civico["ingresso"] == "cancello"):
-            node = {u"lon":round(civico["LON"], 6), u"lat":round(civico["LAT"], 6), u"tag": 
-                {u"addr:housenumber":str(civico["civico_alf"]).encode('utf-8'), 
-                 u"addr:street":get_via_osm(civico["desvia"]), 
-                 u"addr:postcode":str(civico["cap"]).encode('utf-8'), 
-                 u"addr:city":str(civico["sobborgo"]).encode('utf-8'), 
-                 u"barrier":u"gate"}}
+            
+            if (civico["sobborgo"] == "Trento"):
+                
+                node = {u"lon":round(civico["LON"], 6), u"lat":round(civico["LAT"], 6), u"tag": 
+                    {u"addr:housenumber":str(civico["civico_alf"]).encode('utf-8'), 
+                     u"addr:street":get_via_osm(civico["desvia"]), 
+                     u"addr:postcode":str(civico["cap"]).encode('utf-8'), 
+                     u"addr:city":u"Trento",
+                     u"addr:country":u"IT",
+                     u"barrier":u"gate"}}
+                    
+            else:
+                
+                node = {u"lon":round(civico["LON"], 6), u"lat":round(civico["LAT"], 6), u"tag": 
+                    {u"addr:housenumber":str(civico["civico_alf"]).encode('utf-8'), 
+                     u"addr:street":get_via_osm(civico["desvia"]), 
+                     u"addr:postcode":str(civico["cap"]).encode('utf-8'), 
+                     u"addr:hamlet":str(civico["sobborgo"]).encode('utf-8'), 
+                     u"addr:city":u"Trento",
+                     u"addr:country":u"IT",
+                     u"barrier":u"gate"}}
+                    
+                
         else:
-            node = {u"lon":round(civico["LON"], 6), u"lat":round(civico["LAT"], 6), u"tag": 
-                {u"addr:housenumber":str(civico["civico_alf"]).encode('utf-8'), 
-                 u"addr:street":get_via_osm(civico["desvia"]), 
-                 u"addr:postcode":str(civico["cap"]).encode('utf-8'), 
-                 u"addr:city":str(civico["sobborgo"]).encode('utf-8')}}
+            
+            if (civico["sobborgo"] == "Trento"):
+            
+                node = {u"lon":round(civico["LON"], 6), u"lat":round(civico["LAT"], 6), u"tag": 
+                    {u"addr:housenumber":str(civico["civico_alf"]).encode('utf-8'), 
+                     u"addr:street":get_via_osm(civico["desvia"]), 
+                     u"addr:postcode":str(civico["cap"]).encode('utf-8'), 
+                     u"addr:city":u"Trento",
+                     u"addr:country":u"IT"}}
+            
+            else:
+                
+                node = {u"lon":round(civico["LON"], 6), u"lat":round(civico["LAT"], 6), u"tag": 
+                    {u"addr:housenumber":str(civico["civico_alf"]).encode('utf-8'), 
+                     u"addr:street":get_via_osm(civico["desvia"]), 
+                     u"addr:postcode":str(civico["cap"]).encode('utf-8'), 
+                     u"addr:hamlet":str(civico["sobborgo"]).encode('utf-8'),
+                     u"addr:city":u"Trento",
+                     u"addr:country":u"IT"}}
         
         
         print api.NodeCreate(node)
