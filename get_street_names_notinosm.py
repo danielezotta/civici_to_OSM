@@ -14,6 +14,7 @@ import csv
 
 def main():
 
+     # Selecting the database where there are both trento and OSM roads
     db = '../db.sqlite'
     connection = sqlite3.connect(db)
     connection.row_factory = sqlite3.Row
@@ -23,9 +24,10 @@ def main():
     
     start_time = time.time()
     
-    count = 0
     vv = list()
     
+    # Selecting the file containing the streets previously estracted
+    # ! PLEASE LOOK IN THE to_file_all FUNCTION INSIDE get_street_names BEFORE 
     with open("vie_comune_osm.csv") as f:
         filereader = csv.reader(f, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
         for r in filereader:
@@ -45,20 +47,21 @@ def main():
     nn = list()
     cc = list()
 
+    # Getting into the command line streets (and LAT, LON for checking) that haven't a corrispondent in OSM
     for civico in civici:
         via_prov = str(civico["desvia"])
         if via_prov not in vv:
-            count += 1
             if civico["desvia"] not in nn:
                 nn.append(civico["desvia"]) 
                 cc.append((civico["LAT"], civico["LON"]))
             
-    print count
+            
     for r in range(0, len(nn)): 
         print nn[r], str(cc[r])
     end_time = time.time()
     print "Tempo impiegato : ", end_time - start_time
 
+    connection.close()
 
 if __name__ == "__main__":
     main()

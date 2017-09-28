@@ -12,21 +12,23 @@ import time
 
 def main():
     
+    # Selecting the database where there are both trento and OSM housenumbers
     db = '../db.sqlite'
     connection = sqlite3.connect(db)
     connection.row_factory = sqlite3.Row
     connection.enable_load_extension(True)
     cursor = connection.cursor()
-    cursor.execute('SELECT load_extension("mod_spatialite")')
     
     start_time = time.time()
     
+    # Selecting the file to write common street names
     csvfile = open("vie_comune_osm.csv", "w")
     filewriter = csv.writer(csvfile, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
     filewriter.writerow(["Via comune", "Via osm"])
 
     nn = list()
 
+    # Reading the file and writing for every municipality street name the corrispondent in OpenStreetMap
     with open("civici_comuni.csv") as f:
         filereader = csv.reader(f, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
         f.readline()
@@ -42,7 +44,8 @@ def main():
     end_time = time.time()
     print "Tempo impiegato : ", end_time - start_time
 
-
+    csvfile.close()
+    connection.close()
     
 if __name__ == "__main__":
     main()

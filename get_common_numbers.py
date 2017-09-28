@@ -16,7 +16,7 @@ import csv
 
 def main():
 
-    # Selecting the database where there are both trento and OSM housenumbers
+    # Selecting the database where there are both Trento and OSM housenumbers
     db = '../db.sqlite'
     connection = sqlite3.connect(db)
     connection.row_factory = sqlite3.Row
@@ -29,7 +29,7 @@ def main():
     start_time = time.time()
     
     # Fetching all housenumbers that are intersecting each other and have the same number
-    cursor.execute("""SELECT pro.pk_uid AS ID_PROV, 
+    query = """SELECT pro.pk_uid AS ID_PROV, 
                    osm.pk_uid AS ID_OSM,
                    pro.civico_alf AS numero_provincia,
                    osm.housenumbe AS numero_osm,
@@ -45,7 +45,9 @@ def main():
                     	FROM SpatialIndex
                     	WHERE f_table_name = 'civici_osm'
                     	AND search_frame = buffer(pro.Geometry, 20))
-                   AND numero_osm like numero_provincia""")
+                   AND numero_osm like numero_provincia"""
+                   
+    cursor.execute(query)
     
     civici = cursor.fetchall()
 
@@ -58,6 +60,8 @@ def main():
     
     end_time = time.time()
     print "Tempo impiegato : ", end_time - start_time
+
+    connection.close()
 
 ### This function takes all housenumbers and writes to file all for future refining
 def to_file_all(civici):

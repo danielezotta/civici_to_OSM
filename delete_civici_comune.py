@@ -11,20 +11,23 @@ import csv
 
 def main():
     
+    # Selecting the database where there are both trento and OSM housenumbers
     db = '../db.sqlite'
     connection = sqlite3.connect(db)
     connection.row_factory = sqlite3.Row
     connection.enable_load_extension(True)
     cursor = connection.cursor()
-    cursor.execute('SELECT load_extension("mod_spatialite")')
     
+    # Opening the refined file to delete all common numbers
     with open("civici_comuni_refined.csv") as f:
         filereader = csv.reader(f, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
         f.readline()
         for r in filereader:
-            cursor.execute("DELETE FROM civici_prov_principali WHERE PK_UID = " + r[0])
+            query = "DELETE FROM civici_prov_principali WHERE PK_UID = " + r[0]
+            cursor.execute(query)
             connection.commit()
             
+    
     connection.close()
     
 if __name__ == "__main__":
